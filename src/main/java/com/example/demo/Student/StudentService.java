@@ -39,6 +39,7 @@ public class StudentService {
         studentToUpdate.setName(student.getName());
         studentToUpdate.setEmail(student.getEmail());
         studentToUpdate.setPhone(student.getPhone());
+        studentToUpdate.setImagePath(student.getImagePath());
         return studentRepository.save(studentToUpdate);
     }
     public void addNewStudent(Student student) {

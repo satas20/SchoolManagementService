@@ -59,7 +59,8 @@ public class StudentController {
 
         Student student = new Student();
         if (file.isEmpty()) {
-
+            ObjectMapper objectMapper = new ObjectMapper();
+            student = objectMapper.readValue(studentData, Student.class);
         }
         else {
             String fileName = StringUtils.cleanPath(file.getOriginalFilename());
@@ -98,11 +99,8 @@ public class StudentController {
             // Ensure the directory exists (create if it does not)
             Files.createDirectories(targetLocation.getParent());
 
-            if (!Files.exists(targetLocation)) {
-                // File doesn't exist, create directories and save:
-                Files.createDirectories(targetLocation.getParent());
-                Files.copy(file.getInputStream(), targetLocation);
-            }
+            Files.createDirectories(targetLocation.getParent());
+            Files.copy(file.getInputStream(), targetLocation);
 
             ObjectMapper objectMapper = new ObjectMapper();
             Student student = objectMapper.readValue(studentData, Student.class);
