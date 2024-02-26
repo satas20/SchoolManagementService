@@ -4,6 +4,13 @@ import com.example.demo.School.School;
 import com.example.demo.School.SchoolRepository;
 import org.springframework.stereotype.Service;
 
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Service
@@ -38,10 +45,25 @@ public class StudentService {
         studentRepository.save(student);
     }
     public Student deleteStudent(Long id) {
+        try {
+            Path filePath = Paths.get(getStudentById(id).getImagePath());
+            Files.delete(filePath);
+            System.out.println("File deleted successfully.");
+        } catch (NoSuchFileException e) {
+            System.out.println("File not found: " + e.getMessage());
+        } catch (IOException e) {
+            System.out.println("Error deleting file: " + e.getMessage());
+        }
         studentRepository.deleteById(id);
+
         return null;
     }
-
+    public File getStudentImage(Long id) {
+        Student student=studentRepository.findById(id).orElseThrow(() -> new IllegalStateException("Student with id " + id + " does not exist"));
+        Path file = Path.of(student.getImagePath());
+        File image = new File(file.toString());
+        return image;
+    }
     public void addStudentToSchool(Long studentId, Long schoolId) {
         Student student = studentRepository.findById(studentId).orElseThrow();
         School school = schoolRepository.findById(schoolId).orElseThrow();
