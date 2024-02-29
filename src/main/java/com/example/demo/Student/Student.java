@@ -20,9 +20,10 @@ public class Student {
     private String phone;
     private String imagePath;
 
-
-    @ManyToOne // Represents the many side in one-to-many
-    @JoinColumn(name = "school_id") // Creates a foreign key column
+    @ManyToOne(cascade = CascadeType.PERSIST) // Or CascadeType.ALL for more operations
+    @JoinColumn(name = "school_id")
     @JsonBackReference
     private School school;
+
+
 }

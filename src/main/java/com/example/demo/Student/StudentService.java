@@ -28,12 +28,14 @@ public class StudentService {
         return studentRepository.findAll();
     }
     public Student getStudentById(Long id) {
-        return studentRepository.findById(id).orElseThrow(() -> new IllegalStateException("Student with id " + id + " does not exist"));
+        return studentRepository.findById(id).orElse(null);
     }
 
     public Object getStudentByName(String name) {
         return studentRepository.findStudentByName(name).orElseThrow(() -> new IllegalStateException("Student with name " + name + " does not exist"));
     }
+
+
     public Student updateStudent(Long id, Student student) {
         Student studentToUpdate = studentRepository.findById(id).orElseThrow(() -> new IllegalStateException("Student with id " + id + " does not exist"));
         studentToUpdate.setName(student.getName());
@@ -47,7 +49,11 @@ public class StudentService {
     }
     public Student deleteStudent(Long id) {
         try {
-            Path filePath = Paths.get(getStudentById(id).getImagePath());
+            Student st=getStudentById(id);
+            if (st==null){
+                return null;
+            }
+            Path filePath = Paths.get(st.getImagePath());
             Files.delete(filePath);
             System.out.println("File deleted successfully.");
         } catch (NoSuchFileException e) {
@@ -71,7 +77,10 @@ public class StudentService {
 
         school.getStudents().add(student);
         student.setSchool(school);
-
-        studentRepository.save(student); // Saves changes to both
+        try {
+            studentRepository.save(student);
+        }catch (Exception e){
+            throw new RuntimeException();
+        }// Saves changes to both
     }
 }
