@@ -1,8 +1,8 @@
-package com.example.demo.Student;
+package com.example.demo.model.entity;
 
 
-import com.example.demo.School.School;
 import com.fasterxml.jackson.annotation.*;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,6 +10,8 @@ import lombok.*;
 @Data
 @RequiredArgsConstructor
 @Entity
+@Getter
+@Setter
 public class Student {
 
     @Id @GeneratedValue

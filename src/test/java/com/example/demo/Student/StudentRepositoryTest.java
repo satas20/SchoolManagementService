@@ -1,5 +1,7 @@
 package com.example.demo.Student;
 
+import com.example.demo.model.entity.Student;
+import com.example.demo.model.repository.StudentRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;

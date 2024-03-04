@@ -1,15 +1,17 @@
-package com.example.demo.School;
+package com.example.demo.model.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
-import com.example.demo.Student.Student;
+
 import java.util.List;
 
 @Data
 @RequiredArgsConstructor
 @Entity
+@Getter
+@Setter
 public class School {
 
     @Id

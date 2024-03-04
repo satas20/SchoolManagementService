@@ -1,10 +1,11 @@
-package com.example.demo.Student;
+package com.example.demo.controller;
 
-import com.example.demo.School.School;
-import com.example.demo.School.SchoolRepository;
+import com.example.demo.model.entity.School;
+import com.example.demo.model.repository.SchoolRepository;
+import com.example.demo.model.entity.Student;
+import com.example.demo.model.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;

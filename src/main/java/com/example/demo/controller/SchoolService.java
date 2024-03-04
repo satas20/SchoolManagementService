@@ -1,5 +1,7 @@
-package com.example.demo.School;
+package com.example.demo.controller;
 
+import com.example.demo.model.entity.School;
+import com.example.demo.model.repository.SchoolRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
