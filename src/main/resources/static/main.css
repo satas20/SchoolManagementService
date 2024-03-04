@@ -14,6 +14,7 @@ body {
     border-radius: 8px;
     padding: 20px;
     overflow-y: auto;  /* Add a scrollbar if messages overflow */
+    overflow-x: hidden;
 }
 
 /* Input Fields */
@@ -34,7 +35,10 @@ button {
     border-radius: 5px;
     cursor: pointer;
 }
-
+body{
+    display: flex;
+    justify-content: center;
+}
 button:disabled {
     opacity: 0.6;
     cursor: not-allowed;

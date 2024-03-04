@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @Data
 @Getter
 @Setter
@@ -16,8 +19,9 @@ public class OutputMessage {
 
 
     public OutputMessage(String from, String text, String time) {
+        String x = new SimpleDateFormat("HH:mm").format(new Date());
         this.from = from;
         this.text = text;
-        this.time = time;
+        this.time = x;
     }
 }

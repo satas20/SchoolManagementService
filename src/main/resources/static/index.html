@@ -28,6 +28,10 @@
                 stompClient.subscribe('/topic/messages', function (messageOutput) {
                     showMessageOutput(JSON.parse(messageOutput.body));
                 });
+                stompClient.subscribe('/topic/notification', function (messageOutput) {
+
+                    showLog(JSON.parse(messageOutput.body));
+                });
 
                 // Send the connection message after the connection is established
                 var from = document.getElementById('from').value;
@@ -63,6 +67,17 @@
             // Modification: Use insertBefore
             response.insertBefore(p, response.firstChild);
         }
+        function showLog(logMessage) {
+            var response = document.getElementById('response');
+            var p = document.createElement('p');
+            p.style.wordWrap = 'break-word';
+            p.appendChild(document.createTextNode(logMessage.from + ": "
+                + logMessage.text + " (" + logMessage.time + ")"));
+
+            // Modification: Use insertBefore
+            response.insertBefore(p, response.firstChild);
+        }
+
     </script>
 </head>
 <body onload="disconnect()">

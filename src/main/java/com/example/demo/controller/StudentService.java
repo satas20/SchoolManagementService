@@ -1,9 +1,12 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.entity.OutputMessage;
 import com.example.demo.model.entity.School;
 import com.example.demo.model.repository.SchoolRepository;
 import com.example.demo.model.entity.Student;
 import com.example.demo.model.repository.StudentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -12,11 +15,18 @@ import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class StudentService {
 
+
+    @Autowired
+    private  SimpMessagingTemplate messagingTemplate;
     private  final StudentRepository studentRepository;
     private final SchoolRepository schoolRepository;
     public StudentService(StudentRepository studentRepository, SchoolRepository schoolRepository) {
@@ -43,10 +53,15 @@ public class StudentService {
         studentToUpdate.setEmail(student.getEmail());
         studentToUpdate.setPhone(student.getPhone());
         studentToUpdate.setImagePath(student.getImagePath());
+        messagingTemplate.convertAndSend("/topic/notification",
+                new OutputMessage("System Log", "StudentUpdated- "+student.getId()+" "+student.getName(), "time"));
         return studentRepository.save(studentToUpdate);
     }
     public void addNewStudent(Student student) {
+
         studentRepository.save(student);
+        messagingTemplate.convertAndSend("/topic/notification",
+                new OutputMessage("System Log:", "student_added - ID:"+student.getId()+" "+student.getName(), "time"));
     }
     public Student deleteStudent(Long id) {
         try {
@@ -54,6 +69,8 @@ public class StudentService {
             if (st==null){
                 return null;
             }
+            messagingTemplate.convertAndSend("/topic/notification",
+                    new OutputMessage("System Log", "StudentDeleted - "+st.getName(), "time"));
             Path filePath = Paths.get(st.getImagePath());
             Files.delete(filePath);
             System.out.println("File deleted successfully.");
@@ -75,7 +92,10 @@ public class StudentService {
     public void addStudentToSchool(Long studentId, Long schoolId) {
         Student student = studentRepository.findById(studentId).orElseThrow();
         School school = schoolRepository.findById(schoolId).orElseThrow();
-
+        messagingTemplate.convertAndSend("/topic/notification",
+                new OutputMessage("System Log",
+                        "Student registered - "+studentId+" " +student.getName() +", to school "+schoolId+" "+school.getName(),
+                        "time"));
         school.getStudents().add(student);
         student.setSchool(school);
         try {
