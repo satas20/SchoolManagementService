@@ -1,6 +1,6 @@
 # 🏫School Management Service🏫
-This school management service provides a robust set of tools to manage your student and school records.
-This service has a feature to log the changes made to the student and school records and also users can send announcements using web sockets.  All the project is made with Spring boot  using Postgresql DB
+This school management service provides a robust set of tools to manage your student and school records. Student images are saved in local and stored as local path in Db for efficent storage.
+This service has a log system to log the changes made to the student and school records and also users can send announcements using web sockets.  All the project is made with Spring boot using Postgresql DB
 
 ## API Endpoints
 
