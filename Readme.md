@@ -34,7 +34,7 @@ This service has a feature to log the changes made to the student and school rec
 
 <p align="center">
 
-  <img src="Media/ChatLog.png" height= "500"> <img src="Media/SS3.png" height= "500">
+  <img src="Media/ChatLog.png" height= "500"> 
   
 </p>
 
@@ -51,7 +51,7 @@ mvn test
 # How to Run
 Clone the repository:
 ```bash
-git clone 
+git clone https://github.com/satas20/SchoolManagementService.git
 ```
 Cd into the directory:
 ```bash
@@ -74,5 +74,8 @@ Navigate to your browser and go to the specified port in (default: 8080).
 http://localhost:8080/chat
 ```
 Success! You are now running the School Management Service.
-<img src="Media/console.png" height= "200"> 
 
+
+<p align="center">
+  <img src="Media/console.png" height= "500">
+</p>
