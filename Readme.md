@@ -1,8 +1,8 @@
 # 🏫School Management Service🏫
 This school management service provides a robust set of tools to manage your student and school records.
-This service has a feature to log the changes made to the student and school records and also users can send announcements using web sockets.
+This service has a feature to log the changes made to the student and school records and also users can send announcements using web sockets.  All the project is made with Spring boot  using Postgresql DB
 
-## School and Student Controller API Endpoints
+## API Endpoints
 
 ### Student Endpoints
 | Method | URL | Description |
@@ -28,12 +28,13 @@ This service has a feature to log the changes made to the student and school rec
 
 ### Chat log system
  The app has a chat and log system where users can send   announcements to all the users in the system. 
- System automatically logs the changes made in the DB The chat log system is implemented using web sockets.
-    
+  System automatically logs the changes made in the DB The chat log system is implemented using web sockets. Chat system url : http://localhost:8080/
+
+
 
 
 <p align="center">
-
+  
   <img src="Media/ChatLog.png" height= "500"> 
   
 </p>
@@ -71,7 +72,7 @@ java -jar SchoolManagementService.jar
 ```
 Navigate to your browser and go to the specified port in (default: 8080).
 ```
-http://localhost:8080/chat
+http://localhost:8080/
 ```
 Success! You are now running the School Management Service.
 
