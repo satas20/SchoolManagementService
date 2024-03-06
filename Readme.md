@@ -77,5 +77,5 @@ Success! You are now running the School Management Service.
 
 
 <p align="center">
-  <img src="Media/Console.png" height= "500">
+  <img src="Media/Console.png" height= "300">
 </p>
