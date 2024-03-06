@@ -56,7 +56,7 @@ git clone https://github.com/satas20/SchoolManagementService.git
 ```
 Cd into the directory:
 ```bash
-cd ./Executable
+cd SchoolManagementService/Executable
 ```
 
 Edit the properties file to your database configuration:
@@ -70,7 +70,7 @@ Run the project:
 ```bash
 java -jar SchoolManagementService.jar
 ```
-Navigate to your browser and go to the specified port in (default: 8080).
+Navigate to your browser and go to the specified port  (default: 8080) for the Log & Chat system or you can start making API web requests.
 ```
 http://localhost:8080/
 ```
