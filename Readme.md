@@ -35,7 +35,7 @@ This service has a log system to log the changes made to the student and school 
 
 ### Authentication 
 The app uses JWT for authentication. The user can login or register using the  (/login & /register) endpoints. Logging and registering returns
-a JWT token which is used to authenticate the user for further requests. The token is valid for 10 hours.
+a JWT token which is used to authorize the user for further requests. The token is valid for 10 hours.
 
 <p align="center">
 
