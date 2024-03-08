@@ -1,4 +1,4 @@
-# 🏫School Management Service API with authentication🏫
+# 🏫School Management Service API 🏫
 This school management service provides a robust set of tools to manage your student and school records with authentication system. Student images are saved in local and stored as local path in Db for efficent storage.
 This service has a log system to log the changes made to the student and school records with the authenticated user info  also users can send announcements using web sockets.  All the project is made with Spring boot using Postgresql DB
 
