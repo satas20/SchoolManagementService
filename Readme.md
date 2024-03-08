@@ -1,8 +1,16 @@
-# 🏫School Management Service🏫
-This school management service provides a robust set of tools to manage your student and school records. Student images are saved in local and stored as local path in Db for efficent storage.
-This service has a log system to log the changes made to the student and school records and also users can send announcements using web sockets.  All the project is made with Spring boot using Postgresql DB
+# 🏫School Management Service API with authentication🏫
+This school management service provides a robust set of tools to manage your student and school records with authentication system. Student images are saved in local and stored as local path in Db for efficent storage.
+This service has a log system to log the changes made to the student and school records with the authenticated user info  also users can send announcements using web sockets.  All the project is made with Spring boot using Postgresql DB
 
 ## API Endpoints
+### System Endpoints
+| Method | URL               | Description                         |
+|--------|-------------------|-------------------------------------|
+| `GET`  | `/` | Log & Anouncment system.            |
+| `POST` | `/login`          | Retrieves a specific student by ID. |
+| `POST`  | `/register`       | Retrieves a student's image file.   |
+
+
 
 ### Student Endpoints
 | Method | URL | Description |
@@ -25,10 +33,26 @@ This service has a log system to log the changes made to the student and school 
 | `DELETE` | `/api/v1/school/{id}` | Deletes a school.                      |
 | `POST` | `/api/v1/school` | Creates a new school.                  |
 
+### Authentication 
+The app uses JWT for authentication. The user can login or register using the  (/login & /register) endpoints. Logging and registering returns
+a JWT token which is used to authenticate the user for further requests. The token is valid for 10 hours.
+
+<p align="center">
+
+  <img src="Media/System.png" height= "500"> 
+
+</p>
+To make a request to the API, the token should be included in the header as follows:
+
+```bash
+Authorization
+Bearer <token>
+```
+Users can use the Log&Chat system without authentication.
 
 ### Chat log system
  The app has a chat and log system where users can send   announcements to all the users in the system. 
-  System automatically logs the changes made in the DB The chat log system is implemented using web sockets. Chat system url : http://localhost:8080/
+  System automatically logs the changes made in the DB with the username of the user using the JWT Token .The chat log system is implemented using web sockets. Chat system url : http://localhost:8080/
 
 
 
