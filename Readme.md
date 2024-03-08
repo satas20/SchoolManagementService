@@ -7,8 +7,8 @@ This service has a log system to log the changes made to the student and school 
 | Method | URL               | Description                         |
 |--------|-------------------|-------------------------------------|
 | `GET`  | `/` | Log & Anouncment system.            |
-| `POST` | `/login`          | Retrieves a specific student by ID. |
-| `POST`  | `/register`       | Retrieves a student's image file.   |
+| `POST` | `/login`          | Authorize a user and returns Auth token (JWT)  |
+| `POST`  | `/register`       | Creates a user and returns  Auth token (JWT)   |
 
 
 
