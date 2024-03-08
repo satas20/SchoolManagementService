@@ -2,12 +2,14 @@ package com.example.demo.controller;
 
 import com.example.demo.model.entity.OutputMessage;
 import com.example.demo.model.entity.School;
-import com.example.demo.model.repository.SchoolRepository;
 import com.example.demo.model.entity.Student;
+import com.example.demo.model.repository.SchoolRepository;
 import com.example.demo.model.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,11 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class StudentService {
@@ -48,20 +46,23 @@ public class StudentService {
 
 
     public Student updateStudent(Long id, Student student) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName(); // Or auth
         Student studentToUpdate = studentRepository.findById(id).orElseThrow(() -> new IllegalStateException("Student with id " + id + " does not exist"));
         studentToUpdate.setName(student.getName());
         studentToUpdate.setEmail(student.getEmail());
         studentToUpdate.setPhone(student.getPhone());
         studentToUpdate.setImagePath(student.getImagePath());
         messagingTemplate.convertAndSend("/topic/notification",
-                new OutputMessage("System Log", "StudentUpdated- "+student.getId()+" "+student.getName(), "time"));
+                new OutputMessage("System User: "+ currentUserName, "StudentUpdated- "+student.getId()+" "+student.getName(), "time"));
         return studentRepository.save(studentToUpdate);
     }
     public void addNewStudent(Student student) {
-
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName(); // Or auth
         studentRepository.save(student);
         messagingTemplate.convertAndSend("/topic/notification",
-                new OutputMessage("System Log:", "student_added - ID:"+student.getId()+" "+student.getName(), "time"));
+                new OutputMessage("System User: "+ currentUserName, "student_added - ID:"+student.getId()+" "+student.getName(), "time"));
     }
     public Student deleteStudent(Long id) {
         try {
@@ -69,8 +70,10 @@ public class StudentService {
             if (st==null){
                 return null;
             }
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String currentUserName = authentication.getName(); // Or auth
             messagingTemplate.convertAndSend("/topic/notification",
-                    new OutputMessage("System Log", "StudentDeleted - "+st.getName(), "time"));
+                    new OutputMessage("System User: "+ currentUserName, "StudentDeleted - "+st.getName(), "time"));
             Path filePath = Paths.get(st.getImagePath());
             Files.delete(filePath);
             System.out.println("File deleted successfully.");
@@ -90,10 +93,12 @@ public class StudentService {
         return image;
     }
     public void addStudentToSchool(Long studentId, Long schoolId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName(); // Or auth
         Student student = studentRepository.findById(studentId).orElseThrow();
         School school = schoolRepository.findById(schoolId).orElseThrow();
         messagingTemplate.convertAndSend("/topic/notification",
-                new OutputMessage("System Log",
+                new OutputMessage("System User: "+ currentUserName,
                         "Student registered - "+studentId+" " +student.getName() +", to school "+schoolId+" "+school.getName(),
                         "time"));
         school.getStudents().add(student);

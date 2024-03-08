@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.broker.SimpleBrokerMessageHandler;
 import org.springframework.stereotype.Service;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.List;
 
@@ -21,9 +23,11 @@ public class SchoolService {
     }
 
     public void addNewSchool(School school) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName(); // Or auth
         schoolRepository.save(school);
         messagingTemplate.convertAndSend("/topic/notification",
-                new OutputMessage("System Log", "School added- "+school.getId()+" "+school.getName(), "time"));
+                new OutputMessage("System User: "+ currentUserName, "School added- "+school.getId()+" "+school.getName(), "time"));
     }
 
     public void deleteSchool(Long id) {
@@ -35,13 +39,15 @@ public class SchoolService {
     }
 
     public School updateSchool(Long id, School school) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName(); // Or auth
         School schoolToUpdate = schoolRepository.findById(id).orElseThrow(() -> new IllegalStateException("School with id " + id + " does not exist"));
         schoolToUpdate.setName(school.getName());
         schoolToUpdate.setAddress(school.getAddress());
          schoolRepository.save(schoolToUpdate);
 
         messagingTemplate.convertAndSend("/topic/notification",
-                new OutputMessage("System Log", "School- updated "+school.getId()+" "+school.getName(), "time"));
+                new OutputMessage("System User: "+ currentUserName, "School- updated "+school.getId()+" "+school.getName(), "time"));
         return schoolToUpdate;
     }
 
