@@ -63,6 +63,17 @@ Users can use the Log&Chat system without authentication.
   
 </p>
 
+### Swagger Documentation
+
+The API is documented using Swagger. You can test the api using the swagger instead of manually curling or POSTMAN. To access the documentation, navigate to the following URL:
+```
+http://localhost:8080/swagger-ui.html
+```
+
+<p align="center">
+  
+  <img src="Media/Swagger.png" height= "500">
+
 ### Testing
 The project employs JUnit and Mockito for thorough testing to ensure reliability. The tests cover essential areas within the Student Management system, including:
 - Student Repository Tests

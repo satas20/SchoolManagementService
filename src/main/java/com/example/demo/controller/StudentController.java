@@ -2,9 +2,13 @@ package com.example.demo.controller;
 
 import com.example.demo.model.entity.Student;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,16 +30,22 @@ public class StudentController {
         this.studentService = studentService;
     }
 
+
     @GetMapping("/api/v1/student")
+    @Operation(security = { @SecurityRequirement(name = "Bearer Authentication") })
     public List<Student> getStudents() {
         return studentService.getStudents();
     }
+
+    @Operation(security = { @SecurityRequirement(name = "Bearer Authentication") })
 
     @GetMapping("/api/v1/student/{id}")
     public Student getStudentById(@PathVariable Long id) {
         return studentService.getStudentById(id);
     }
     @GetMapping("/api/v1/student/image/{id}")
+    @Operation(security = { @SecurityRequirement(name = "Bearer Authentication") })
+
     public ResponseEntity<byte[]>  getStudentImage(@PathVariable Long id) throws IOException {
         File imageFile= studentService.getStudentImage(id);
         byte[] imageData = Files.readAllBytes(imageFile.toPath());
@@ -53,6 +63,8 @@ public class StudentController {
 
 
     @PostMapping(value = "/api/v1/student", consumes = "multipart/form-data")
+    @Operation(security = { @SecurityRequirement(name = "Bearer Authentication") })
+
     public ResponseEntity<String> fileUploading(@RequestParam("file") MultipartFile file,  @RequestParam("studentData")  String studentData) throws IOException {
 
         Student student = new Student();
@@ -82,6 +94,8 @@ public class StudentController {
     }
 
     @PutMapping(value = "api/v1/student/{id}", consumes = "multipart/form-data")
+    @Operation(security = { @SecurityRequirement(name = "Bearer Authentication") })
+
     public ResponseEntity<String> updateStudent(@PathVariable Long id,
                                                 @RequestParam("file") MultipartFile file,
                                                 @RequestParam("studentData")  String studentData) throws IOException {
@@ -112,11 +126,15 @@ public class StudentController {
     }
 
     @DeleteMapping("/api/v1/student/{id}")
+    @Operation(security = { @SecurityRequirement(name = "Bearer Authentication") })
+
     public void deleteStudent(@PathVariable Long id) {
         studentService.deleteStudent(id);
     }
 
     @PutMapping("/api/v1/student/{studentId}/school/{schoolId}")
+    @Operation(security = { @SecurityRequirement(name = "Bearer Authentication") })
+
     public void addStudentToSchool(@PathVariable Long studentId, @PathVariable Long schoolId) {
         studentService.addStudentToSchool(studentId, schoolId);
     }
